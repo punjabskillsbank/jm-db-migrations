@@ -14,10 +14,10 @@
         </preConditions>
 
         <createTable tableName="notifications">
-            <column name="id" type="BIGSERIAL">
+            <column name="notification_id" type="BIGSERIAL">
                 <constraints primaryKey="true" primaryKeyName="pk_notifications" nullable="false"/>
             </column>
-            <column name="sub" type="BIGINT">
+            <column name="user_id" type="BIGINT">
                 <constraints nullable="false"/>
             </column>
             <column name="type" type="VARCHAR(50)">
