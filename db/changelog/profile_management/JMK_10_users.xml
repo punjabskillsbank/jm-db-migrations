@@ -38,7 +38,7 @@
             BEGIN
             NEW.updated_at = NOW();
             RETURN NEW;
-            END;
+            END
             $$ LANGUAGE plpgsql;
         </sql>
     </changeSet>
