@@ -18,52 +18,30 @@
             <column name="user_id" type="UUID">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="phone_number" type="VARCHAR(255)" />
-            <column name="bio" type="VARCHAR(255)"/>
-            <column name="profile_photo_url" type="VARCHAR(255)"/>
+            <column name="phone_number" type="VARCHAR(20)" />
+            <column name="bio" type="TEXT"/>
+            <column name="profile_photo_url" type="VARCHAR(2048)"/>
             <column name="company_name" type="VARCHAR(255)">
                 <constraints nullable="false"/>
             </column>
-            <column name="company_size" type="VARCHAR(255)"/>
+            <column name="company_size" type="VARCHAR(50)"/>
             <column name="industry" type="VARCHAR(255)"/>
             <column name="timezone" type="VARCHAR(255)" defaultValue="'Asia/Kolkata'"/>
-            <column name="country" type="VARCHAR(255)" defaultValue="'India'"/>
-            <column name="city" type="VARCHAR(255)"/>
-            <column name="zipcode" type="VARCHAR(255)"/>
+            <column name="city" type="VARCHAR(100)"/>
+            <column name="state" type="VARCHAR(100)"/>
+            <column name="country" type="VARCHAR(100)" defaultValue="'India'"/>
+            <column name="postal_code" type="VARCHAR(20)"/>
             <column name="address" type="VARCHAR(255)"/>
             <column name="created_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP"/>
             <column name="updated_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP"/>
-
-
         </createTable>
 
         <rollback>
             <dropTable tableName="clients"/>
         </rollback>
-
     </changeSet>
 
-    <changeSet id="JMK_14_002-phone-number-check" author="Pawanpreet Singh">
-        <sql>
-            ALTER TABLE clients
-            DROP CONSTRAINT IF EXISTS phone_number_check,
-            ADD CONSTRAINT phone_number_check
-            CHECK (phone_number ~ '^\+91[6789][0-9]{9}$' OR phone_number ~ '^[6789][0-9]{9}$')
-
-        </sql>
-    </changeSet>
-
-
-    <changeSet id="JMK_14_003-zipcode-check" author="Pawanpreet Singh">
-        <sql>
-            ALTER TABLE clients
-            ADD CONSTRAINT zipcode_check
-            CHECK (zipcode ~ '^[1-9][0-9]{5}$')
-
-        </sql>
-    </changeSet>
-
-    <changeSet id="JMK_14_004-add-foreign-key" author="Pawanpreet Singh">
+    <changeSet id="JMK_14_002-add-foreign-key" author="Pawanpreet Singh">
         <addForeignKeyConstraint
                 baseTableName="clients"
                 baseColumnNames="user_id"
@@ -73,7 +51,7 @@
                 onDelete="CASCADE"/>
     </changeSet>
 
-    <changeSet id="JMK_14_005-create-trigger-function" author="Pawanpreet Singh">
+    <changeSet id="JMK_14_003-create-trigger-function" author="Pawanpreet Singh">
         <sql>
             CREATE OR REPLACE FUNCTION update_last_updated_column()
             RETURNS TRIGGER AS $$
@@ -85,7 +63,7 @@
         </sql>
     </changeSet>
 
-    <changeSet id="JMK_14_006-create-trigger" author="Pawanpreet Singh">
+    <changeSet id="JMK_14_004-create-trigger" author="Pawanpreet Singh">
         <sql>
             CREATE TRIGGER set_updated_at
             BEFORE UPDATE ON clients
@@ -93,8 +71,6 @@
             EXECUTE FUNCTION update_last_updated_column();
         </sql>
     </changeSet>
-
-
 
 </databaseChangeLog>
 
