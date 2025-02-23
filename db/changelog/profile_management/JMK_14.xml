@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.8.xsd">
+
+
+    <changeSet id="JMK_14_001-create-clients-table" author="Pawanpreet Singh">
+
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="clients"/>
+            </not>
+        </preConditions>
+
+        <createTable tableName="clients">
+            <column name="user_id" type="UUID">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="phone_number" type="VARCHAR(255)" />
+            <column name="bio" type="VARCHAR(255)"/>
+            <column name="profile_photo_url" type="VARCHAR(255)"/>
+            <column name="company_name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="company_size" type="VARCHAR(255)"/>
+            <column name="industry" type="VARCHAR(255)"/>
+            <column name="timezone" type="VARCHAR(255)" defaultValue="'Asia/Kolkata'"/>
+            <column name="country" type="VARCHAR(255)" defaultValue="'India'"/>
+            <column name="city" type="VARCHAR(255)"/>
+            <column name="zipcode" type="VARCHAR(255)"/>
+            <column name="address" type="VARCHAR(255)"/>
+            <column name="created_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP"/>
+            <column name="updated_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP"/>
+
+
+        </createTable>
+
+        <rollback>
+            <dropTable tableName="clients"/>
+        </rollback>
+
+    </changeSet>
+
+    <changeSet id="JMK_14_002-phone-number-check" author="Pawanpreet Singh">
+        <sql>
+            ALTER TABLE clients
+            DROP CONSTRAINT IF EXISTS phone_number_check,
+            ADD CONSTRAINT phone_number_check
+            CHECK (phone_number ~ '^\+91[6789][0-9]{9}$' OR phone_number ~ '^[6789][0-9]{9}$')
+
+        </sql>
+    </changeSet>
+
+
+    <changeSet id="JMK_14_003-zipcode-check" author="Pawanpreet Singh">
+        <sql>
+            ALTER TABLE clients
+            ADD CONSTRAINT zipcode_check
+            CHECK (zipcode ~ '^[1-9][0-9]{5}$')
+
+        </sql>
+    </changeSet>
+
+    <changeSet id="JMK_14_004-add-foreign-key" author="Pawanpreet Singh">
+        <addForeignKeyConstraint
+                baseTableName="clients"
+                baseColumnNames="user_id"
+                referencedTableName="users"
+                referencedColumnNames="user_id"
+                constraintName="fk_clients_users"
+                onDelete="CASCADE"/>
+    </changeSet>
+
+    <changeSet id="JMK_14_005-create-trigger-function" author="Pawanpreet Singh">
+        <sql>
+            CREATE OR REPLACE FUNCTION update_last_updated_column()
+            RETURNS TRIGGER AS $$
+            BEGIN
+            NEW.updated_at = NOW();
+            RETURN NEW;
+            END
+            $$ LANGUAGE plpgsql;
+        </sql>
+    </changeSet>
+
+    <changeSet id="JMK_14_006-create-trigger" author="Pawanpreet Singh">
+        <sql>
+            CREATE TRIGGER set_updated_at
+            BEFORE UPDATE ON clients
+            FOR EACH ROW
+            EXECUTE FUNCTION update_last_updated_column();
+        </sql>
+    </changeSet>
+
+
+
+</databaseChangeLog>
+
+
