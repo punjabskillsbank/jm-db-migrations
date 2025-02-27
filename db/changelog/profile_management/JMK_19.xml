@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="1" author="Sehajbir Singh">
+        <createTable tableName="user_registration" schemaName="public">
+            <column name="sub" type="uuid">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="email" type="varchar(255)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="first_name" type="varchar(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_name" type="varchar(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="role" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="2" author="Sehajbir Singh">
+        <createTable tableName="freelancer_profile" schemaName="public">
+            <column name="title" type="varchar(255)"/>
+            <column name="bio" type="varchar(255)"/>
+            <column name="hourly_rate" type="numeric(38, 2)"/>
+            <column name="address" type="varchar(255)"/>
+            <column name="phone_number" type="varchar(255)"/>
+            <column name="is_abc_member" type="boolean"/>
+            <column name="profile_photo" type="varchar(255)"/>
+            <column name="profile_status" type="varchar(255)">
+                <constraints checkConstraint="freelancer_profile_profile_status_check CHECK (((profile_status)::text = ANY (ARRAY[('APPROVED'::character varying)::text, ('REJECTED'::character varying)::text, ('PENDING'::character varying)::text])))"/>
+            </column>
+            <column name="sub" type="uuid" defaultValueComputed="gen_random_uuid()">
+                <constraints primaryKey="true" nullable="false" unique="true"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint
+                baseTableName="freelancer_profile"
+                baseColumnNames="sub"
+                constraintName="fk_freelancer_profile_user_registration"
+                referencedTableName="user_registration"
+                referencedColumnNames="sub"/>
+    </changeSet>
+
+    <changeSet id="3" author="Sehajbir Singh">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="education" schemaName="public"/>
+            </not>
+        </preConditions>
+        <createTable tableName="education" schemaName="public">
+            <column name="id" type="bigserial">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="degree" type="varchar(255)"/>
+            <column name="specialization" type="varchar(255)"/>
+            <column name="institution" type="varchar(255)"/>
+            <column name="start_year" type="varchar(255)"/>
+            <column name="end_year" type="varchar(255)"/>
+            <column name="freelancer_id" type="uuid"/>
+        </createTable>
+
+        <addForeignKeyConstraint
+                baseTableName="education"
+                baseColumnNames="freelancer_id"
+                constraintName="education_freelancer_id_fkey"
+                referencedTableName="freelancer_profile"
+                referencedColumnNames="sub"
+                onDelete="CASCADE"/>
+    </changeSet>
+
+    <changeSet id="4" author="Sehajbir Singh">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="work_experience" schemaName="public"/>
+            </not>
+        </preConditions>
+        <createTable tableName="work_experience" schemaName="public">
+            <column name="id" type="bigserial">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="job_title" type="varchar(255)"/>
+            <column name="company_name" type="varchar(255)"/>
+            <column name="start_date" type="varchar(255)"/>
+            <column name="end_date" type="varchar(255)"/>
+            <column name="job_responsibilities" type="varchar(255)"/>
+            <column name="freelancer_id" type="uuid"/>
+        </createTable>
+
+        <addForeignKeyConstraint
+                baseTableName="work_experience"
+                baseColumnNames="freelancer_id"
+                constraintName="work_experience_freelancer_id_fkey"
+                referencedTableName="freelancer_profile"
+                referencedColumnNames="sub"
+                onDelete="CASCADE"/>
+    </changeSet>
+
+    <changeSet id="5" author="Sehajbir Singh">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="certificates" schemaName="public"/>
+            </not>
+        </preConditions>
+        <createTable tableName="certificates" schemaName="public">
+            <column name="id" type="bigserial">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="certificate_name" type="varchar(255)"/>
+            <column name="issued_by" type="varchar(255)"/>
+            <column name="issue_date" type="varchar(255)"/>
+            <column name="expiry_date" type="varchar(255)"/>
+            <column name="credential_url" type="varchar(255)"/>
+            <column name="freelancer_id" type="uuid"/>
+        </createTable>
+
+        <addForeignKeyConstraint
+                baseTableName="certificates"
+                baseColumnNames="freelancer_id"
+                constraintName="certificates_freelancer_id_fkey"
+                referencedTableName="freelancer_profile"
+                referencedColumnNames="sub"
+                onDelete="CASCADE"/>
+    </changeSet>
+
+</databaseChangeLog>
