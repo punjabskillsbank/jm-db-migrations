@@ -8,6 +8,7 @@
     <include file="db/changelog/notifications/JMK_6.xml"/>
     <include file="db/changelog/profile_management/JMK_10.xml"/>
     <include file="db/changelog/profile_management/JMK_14.xml"/>
+    <include file="db/changelog/profile_management/JMK_19.xml"/>
 
 
 </databaseChangeLog>
