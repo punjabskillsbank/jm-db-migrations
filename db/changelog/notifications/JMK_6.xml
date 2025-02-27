@@ -5,7 +5,7 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.8.xsd">
 
-    <changeSet id="JMK_6_Create_Notifications_Table" author="Ivkaran Singh">
+    <changeSet id="JMK_6_01_Create_Notifications_Table" author="Ivkaran Singh">
         <!-- Halt script if the table already exists -->
         <preConditions onFail="MARK_RAN">
             <not>
@@ -14,10 +14,10 @@
         </preConditions>
 
         <createTable tableName="notifications">
-            <column name="notification_id" type="BIGSERIAL">
-                <constraints primaryKey="true" primaryKeyName="pk_notifications" nullable="false"/>
+            <column name="notification_id" type="SERIAL">
+                <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="user_id" type="BIGINT">
+            <column name="user_id" type="UUID">
                 <constraints nullable="false"/>
             </column>
             <column name="type" type="VARCHAR(50)">
@@ -27,14 +27,23 @@
                 <constraints nullable="false"/>
             </column>
             <column name="is_read" type="BOOLEAN" defaultValueBoolean="false"/>
-            <column name="created_at" type="TIMESTAMP" defaultValueComputed="NOW()"/>
-            <column name="updated_at" type="TIMESTAMP" defaultValueComputed="NOW()"/>
+            <column name="created_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP"/>
         </createTable>
 
         <!-- Rollback: Drop the table if it exists -->
         <rollback>
             <dropTable tableName="notifications"/>
         </rollback>
+    </changeSet>
+
+    <changeSet id="JMK_6_02_Add_Notifications_Foreign_Key" author="Ivkaran Singh">
+        <addForeignKeyConstraint
+                baseTableName="notifications"
+                baseColumnNames="user_id"
+                referencedTableName="users"
+                referencedColumnNames="user_id"
+                constraintName="fk_notifications_users"
+                onDelete="CASCADE"/>
     </changeSet>
 
 </databaseChangeLog>
