@@ -7,7 +7,7 @@
 
     <changeSet id="JMK_10_001-create-enum-types" author="Pawanpreet Singh">
         <sql>CREATE TYPE user_role AS ENUM ('CLIENT', 'FREELANCER', 'ADMIN', 'CLIENT_FREELANCER');</sql>
-        <sql>CREATE TYPE status AS ENUM('ACTIVE','DEACTIVATED','DELETED', 'SUSPENDED', 'BANNED','PENDING');</sql>
+        <sql>CREATE TYPE account_status AS ENUM('ACTIVE','DEACTIVATED','DELETED', 'SUSPENDED', 'BANNED','PENDING');</sql>
     </changeSet>
 
     <changeSet id="JMK_10_002-create-users-table" author="Pawanpreet Singh">
@@ -32,7 +32,7 @@
                 <constraints nullable="true"/>
             </column>
             <column name="role" type="user_role"/>
-            <column name="account_status" type="status"/>
+            <column name="account_status" type="account_status"/>
             <column name="created_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP"/>
             <column name="updated_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP"/>
         </createTable>
