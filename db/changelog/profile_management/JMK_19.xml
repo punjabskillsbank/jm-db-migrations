@@ -23,10 +23,10 @@
             <column name="title" type="varchar(255)"/>
             <column name="bio" type="TEXT"/>
             <column name="hourly_rate" type="numeric(38, 2)"/>
-            <column name="timezone" type="VARCHAR(255)" defaultValue="'Asia/Kolkata'"/>
+            <column name="timezone" type="VARCHAR(255)" defaultValue="Asia/Kolkata"/>
             <column name="city" type="VARCHAR(100)"/>
             <column name="state" type="VARCHAR(100)"/>
-            <column name="country" type="VARCHAR(100)" defaultValue="'India'"/>
+            <column name="country" type="VARCHAR(100)" defaultValue="India"/>
             <column name="postal_code" type="VARCHAR(20)"/>
             <column name="address" type="VARCHAR(255)"/>
             <column name="phone_number" type="VARCHAR(20)" />
