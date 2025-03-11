@@ -1,0 +1,95 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="JMK_24_03_Create_Category_Table" author="Lovepreet Kaur">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="category"/>
+            </not>
+        </preConditions>
+
+        <createTable tableName="category">
+            <column name="category_id" type="INT">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="category_name" type="VARCHAR(255)"/>
+            <column name="speciality_name" type="VARCHAR(255)"/>
+            <column name="updated_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP"/>
+            <column name="status" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+
+
+    <changeSet id="JMK_24_01_Create_Enum_Types" author="Lovepreet Kaur">
+        <sql>
+            CREATE TYPE budget_type AS ENUM('hourly', 'fixed');
+            CREATE TYPE project_duration AS ENUM('short_term', 'medium_term', 'long_term');
+        </sql>
+    </changeSet>
+
+    <changeSet id="JMK_24_02_Create_Job_Posting_Table" author="Lovepreet Kaur">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="job_posting"/>
+            </not>
+        </preConditions>
+
+        <createTable tableName="job_posting">
+            <column name="job_id" type="INT">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="title" type="VARCHAR(255)"/>
+            <column name="description" type="TEXT"/>
+            <column name="budget_type" type="budget_type"/>
+            <column name="hourly_min_rate" type="INT"/>
+            <column name="hourly_max_rate" type="INT"/>
+            <column name="fixed_price" type="INT"/>
+            <column name="project_duration" type="project_duration"/>
+            <column name="experience_level" type="VARCHAR(255)"/>
+            <column name="category_id" type="INT">
+                <constraints nullable="false" foreignKeyName="fk_job_category" referencedTableName="category" referencedColumnNames="category_id"/>
+            </column>
+            <column name="updated_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP"/>
+            <column name="status" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+
+
+    <changeSet id="JMK_24_04_Create_Skills_Table" author="Lovepreet Kaur">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="skills"/>
+            </not>
+        </preConditions>
+
+        <createTable tableName="skills">
+            <column name="skill_id" type="INT">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="skill_name" type="VARCHAR(255)"/>
+            <column name="updated_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP"/>
+            <column name="status" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="JMK_24_05_Create_Job_Skills_Table" author="Lovepreet Kaur">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="job_skills"/>
+            </not>
+        </preConditions>
+
+        <createTable tableName="job_skills">
+            <column name="job_id" type="INT">
+                <constraints nullable="false" foreignKeyName="fk_job_skills_job" referencedTableName="job_posting" referencedColumnNames="job_id"/>
+            </column>
+            <column name="skills_id" type="INT">
+                <constraints nullable="false" foreignKeyName="fk_job_skills_skill" referencedTableName="skills" referencedColumnNames="skill_id"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+</databaseChangeLog>
