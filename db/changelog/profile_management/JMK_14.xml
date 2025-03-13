@@ -32,8 +32,8 @@
             <column name="country" type="VARCHAR(100)" defaultValue="India"/>
             <column name="postal_code" type="VARCHAR(20)"/>
             <column name="address" type="VARCHAR(255)"/>
-            <column name="created_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP"/>
-            <column name="updated_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP"/>
+            <column name="created_at" type="TIMESTAMP" />
+            <column name="updated_at" type="TIMESTAMP" />
         </createTable>
 
         <rollback>
@@ -49,15 +49,6 @@
                 referencedColumnNames="user_id"
                 constraintName="fk_clients_users"
                 onDelete="CASCADE"/>
-    </changeSet>
-
-    <changeSet id="JMK_14_004-create-trigger" author="Pawanpreet Singh">
-        <sql>
-            CREATE TRIGGER set_updated_at
-            BEFORE UPDATE ON clients
-            FOR EACH ROW
-            EXECUTE FUNCTION update_last_updated_column();
-        </sql>
     </changeSet>
 
 </databaseChangeLog>
