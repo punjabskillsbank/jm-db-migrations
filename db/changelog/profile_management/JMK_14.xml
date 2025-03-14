@@ -15,7 +15,7 @@
         </preConditions>
 
         <createTable tableName="clients">
-            <column name="user_id" type="UUID">
+            <column name="client_id" type="UUID">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="phone_number" type="VARCHAR(20)" />
@@ -44,7 +44,7 @@
     <changeSet id="JMK_14_002-add-foreign-key" author="Pawanpreet Singh">
         <addForeignKeyConstraint
                 baseTableName="clients"
-                baseColumnNames="user_id"
+                baseColumnNames="client_id"
                 referencedTableName="users"
                 referencedColumnNames="user_id"
                 constraintName="fk_clients_users"
