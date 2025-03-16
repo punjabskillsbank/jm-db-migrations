@@ -14,7 +14,43 @@
         </sql>
     </changeSet>
 
-    <changeSet id="JMK_24_02_Create_Job_Posting_Table" author="Lovepreet Kaur">
+    <changeSet id="JMK_24_02_Create_Categories_Table" author="Lovepreet Kaur">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="categories"/>
+            </not>
+        </preConditions>
+
+        <createTable tableName="categories">
+            <column name="categories_id" type="SERIAL">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="categories_name" type="VARCHAR(255)"/>
+            <column name="speciality_name" type="VARCHAR(255)"/>
+            <column name="created_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP"/>
+            <column name="updated_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="JMK_24_03_Create_Skills_Table" author="Lovepreet Kaur">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="skills"/>
+            </not>
+        </preConditions>
+
+        <createTable tableName="skills">
+            <column name="skill_id" type="SERIAL">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="skill_name" type="VARCHAR(255)"/>
+            <column name="created_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP"/>
+            <column name="updated_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP"/>
+        </createTable>
+    </changeSet>
+
+
+    <changeSet id="JMK_24_04_Create_Job_Posting_Table" author="Lovepreet Kaur">
         <preConditions onFail="MARK_RAN">
             <not>
                 <tableExists tableName="job_posting"/>
@@ -39,42 +75,6 @@
             <column name="created_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP"/>
             <column name="updated_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP"/>
             <column name="status" type="status_enum"/>
-        </createTable>
-    </changeSet>
-
-    <changeSet id="JMK_24_03_Create_Categories_Table" author="Lovepreet Kaur">
-        <preConditions onFail="MARK_RAN">
-            <not>
-                <tableExists tableName="categories"/>
-            </not>
-        </preConditions>
-
-        <createTable tableName="categories">
-            <column name="categories_id" type="SERIAL">
-                <constraints primaryKey="true" nullable="false"/>
-            </column>
-            <column name="categories_name" type="VARCHAR(255)"/>
-            <column name="speciality_name" type="VARCHAR(255)"/>
-            <column name="created_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP"/>
-            <column name="updated_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP"/>
-        </createTable>
-    </changeSet>
-
-
-    <changeSet id="JMK_24_04_Create_Skills_Table" author="Lovepreet Kaur">
-        <preConditions onFail="MARK_RAN">
-            <not>
-                <tableExists tableName="skills"/>
-            </not>
-        </preConditions>
-
-        <createTable tableName="skills">
-            <column name="skill_id" type="SERIAL">
-                <constraints primaryKey="true" nullable="false"/>
-            </column>
-            <column name="skill_name" type="VARCHAR(255)"/>
-            <column name="created_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP"/>
-            <column name="updated_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP"/>
         </createTable>
     </changeSet>
 
