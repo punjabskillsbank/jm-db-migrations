@@ -17,7 +17,7 @@
         </preConditions>
 
         <createTable tableName="freelancers">
-            <column name="user_id" type="UUID">
+            <column name="freelancer_id" type="UUID">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="title" type="varchar(255)"/>
@@ -33,8 +33,8 @@
             <column name="is_abc_member" type="boolean"/>
             <column name="profile_photo_url" type="VARCHAR(2048)"/>
             <column name="profile_status" type="profile_status"/>
-            <column name="created_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP"/>
-            <column name="updated_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP"/>
+            <column name="created_at" type="TIMESTAMP" />
+            <column name="updated_at" type="TIMESTAMP" />
         </createTable>
 
         <rollback>
@@ -45,7 +45,7 @@
     <changeSet id="JMK_19_03_Add_Freelancers_Foreign_Key" author="Ivkaran Singh">
         <addForeignKeyConstraint
                 baseTableName="freelancers"
-                baseColumnNames="user_id"
+                baseColumnNames="freelancer_id"
                 referencedTableName="users"
                 referencedColumnNames="user_id"
                 constraintName="fk_freelancers_users"
@@ -68,9 +68,9 @@
             <column name="institution" type="varchar(255)"/>
             <column name="start_year" type="INTEGER"/>
             <column name="end_year" type="INTEGER"/>
-            <column name="user_id" type="UUID"/>
-            <column name="created_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP"/>
-            <column name="updated_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP"/>
+            <column name="freelancer_id" type="UUID"/>
+            <column name="created_at" type="TIMESTAMP" />
+            <column name="updated_at" type="TIMESTAMP" />
         </createTable>
 
         <rollback>
@@ -81,9 +81,9 @@
     <changeSet id="JMK_19_05_Add_Educations_Foreign_Key" author="Ivkaran Singh">
         <addForeignKeyConstraint
                 baseTableName="educations"
-                baseColumnNames="user_id"
+                baseColumnNames="freelancer_id"
                 referencedTableName="freelancers"
-                referencedColumnNames="user_id"
+                referencedColumnNames="freelancer_id"
                 constraintName="fk_educations_freelancers"
                 onDelete="CASCADE"/>
     </changeSet>
@@ -103,9 +103,9 @@
             <column name="start_date" type="DATE"/>
             <column name="end_date" type="DATE"/>
             <column name="job_responsibilities" type="TEXT"/>
-            <column name="user_id" type="UUID"/>
-            <column name="created_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP"/>
-            <column name="updated_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP"/>
+            <column name="freelancer_id" type="UUID"/>
+            <column name="created_at" type="TIMESTAMP" />
+            <column name="updated_at" type="TIMESTAMP" />
         </createTable>
 
         <rollback>
@@ -116,9 +116,9 @@
     <changeSet id="JMK_19_07_Add_Jobs_Foreign_Key" author="Ivkaran Singh">
         <addForeignKeyConstraint
                 baseTableName="jobs"
-                baseColumnNames="user_id"
+                baseColumnNames="freelancer_id"
                 referencedTableName="freelancers"
-                referencedColumnNames="user_id"
+                referencedColumnNames="freelancer_id"
                 constraintName="fk_jobs_freelancers"
                 onDelete="CASCADE"/>
     </changeSet>
@@ -138,9 +138,9 @@
             <column name="issue_date" type="DATE"/>
             <column name="expiry_date" type="DATE"/>
             <column name="credential_url" type="VARCHAR(2048)"/>
-            <column name="user_id" type="UUID"/>
-            <column name="created_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP"/>
-            <column name="updated_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP"/>
+            <column name="freelancer_id" type="UUID"/>
+            <column name="created_at" type="TIMESTAMP" />
+            <column name="updated_at" type="TIMESTAMP" />
         </createTable>
 
         <rollback>
@@ -151,47 +151,11 @@
     <changeSet id="JMK_19_09_Add_Certificates_Foreign_Key" author="Ivkaran Singh">
         <addForeignKeyConstraint
                 baseTableName="certificates"
-                baseColumnNames="user_id"
+                baseColumnNames="freelancer_id"
                 referencedTableName="freelancers"
-                referencedColumnNames="user_id"
+                referencedColumnNames="freelancer_id"
                 constraintName="fk_certificates_freelancers"
                 onDelete="CASCADE"/>
-    </changeSet>
-
-    <changeSet id="JMK_19_10_Create_Freelancers_Trigger" author="Ivkaran Singh">
-        <sql>
-            CREATE TRIGGER set_updated_at
-            BEFORE UPDATE ON freelancers
-            FOR EACH ROW
-            EXECUTE FUNCTION update_last_updated_column();
-        </sql>
-    </changeSet>
-
-    <changeSet id="JMK_19_11_Create_Educations_Trigger" author="Ivkaran Singh">
-        <sql>
-            CREATE TRIGGER set_updated_at
-            BEFORE UPDATE ON educations
-            FOR EACH ROW
-            EXECUTE FUNCTION update_last_updated_column();
-        </sql>
-    </changeSet>
-
-    <changeSet id="JMK_19_12_Create_Jobs_Trigger" author="Ivkaran Singh">
-        <sql>
-            CREATE TRIGGER set_updated_at
-            BEFORE UPDATE ON jobs
-            FOR EACH ROW
-            EXECUTE FUNCTION update_last_updated_column();
-        </sql>
-    </changeSet>
-
-    <changeSet id="JMK_19_13_Create_Certificates_Trigger" author="Ivkaran Singh">
-        <sql>
-            CREATE TRIGGER set_updated_at
-            BEFORE UPDATE ON certificates
-            FOR EACH ROW
-            EXECUTE FUNCTION update_last_updated_column();
-        </sql>
     </changeSet>
 
 </databaseChangeLog>
