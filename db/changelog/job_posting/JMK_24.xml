@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="JMK_24_01_Create_Enum_Types" author="Lovepreet Kaur">
+        <sql>
+            CREATE TYPE budget_type AS ENUM('HOURLY', 'FIXED');
+            CREATE TYPE project_duration AS ENUM('SHORT_TERM', 'MEDIUM_TERM', 'LONG_TERM');
+            CREATE TYPE experience_level AS ENUM('BEGINNER', 'INTERMEDIATE', 'ADVANCED');
+            CREATE TYPE job_posting_status AS ENUM('DRAFT', 'OPEN', 'IN_REVIEW', 'PAUSED', 'ASSIGNED', 'IN_PROGRESS', 'COMPLETED', 'CANCELLED', 'EXPIRED', 'CLOSED');
+        </sql>
+    </changeSet>
+
+    <changeSet id="JMK_24_02_Create_Categories_Table" author="Lovepreet Kaur">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="categories"/>
+            </not>
+        </preConditions>
+
+        <createTable tableName="categories">
+            <column name="category_id" type="SERIAL">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="category" type="VARCHAR(255)"/>
+            <column name="speciality" type="VARCHAR(255)"/>
+            <column name="created_at" type="TIMESTAMP"/>
+            <column name="updated_at" type="TIMESTAMP"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="JMK_24_03_Create_Skills_Table" author="Lovepreet Kaur">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="skills"/>
+            </not>
+        </preConditions>
+
+        <createTable tableName="skills">
+            <column name="skill_id" type="SERIAL">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="skill" type="VARCHAR(255)"/>
+            <column name="created_at" type="TIMESTAMP"/>
+            <column name="updated_at" type="TIMESTAMP"/>
+        </createTable>
+    </changeSet>
+
+
+    <changeSet id="JMK_24_04_Create_Job_Postings_Table" author="Lovepreet Kaur">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="job_postings"/>
+            </not>
+        </preConditions>
+
+        <createTable tableName="job_postings">
+            <column name="job_posting_id" type="SERIAL">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="client_id" type="UUID">
+                <constraints nullable="false" foreignKeyName="fk_clients_job_postings" referencedTableName="clients" referencedColumnNames="client_id"/>
+            </column>
+            <column name="title" type="VARCHAR(255)"/>
+            <column name="description" type="TEXT"/>
+            <column name="budget_type" type="budget_type"/>
+            <column name="hourly_min_rate" type="INT"/>
+            <column name="hourly_max_rate" type="INT"/>
+            <column name="fixed_price" type="INT"/>
+            <column name="project_duration" type="project_duration"/>
+            <column name="experience_level" type="experience_level"/>
+            <column name="job_posting_status" type="job_posting_status"/>
+            <column name="category_id" type="int">
+                <constraints nullable="false" foreignKeyName="fk_job_postings_categories" referencedTableName="categories" referencedColumnNames="category_id"/>
+            </column>
+            <column name="created_at" type="TIMESTAMP"/>
+            <column name="updated_at" type="TIMESTAMP"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="JMK_24_05_Create_Job_Postings_Skills_Table" author="Lovepreet Kaur">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="job_postings_skills"/>
+            </not>
+        </preConditions>
+
+        <createTable tableName="job_postings_skills">
+            <column name="job_posting_id" type="INT">
+                <constraints nullable="false" foreignKeyName="fk_job_postings_job_postings_skills" referencedTableName="job_postings" referencedColumnNames="job_posting_id"/>
+            </column>
+            <column name="skill_id" type="INT">
+                <constraints nullable="false" foreignKeyName="fk_skills_job_postings" referencedTableName="skills" referencedColumnNames="skill_id"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+</databaseChangeLog>
