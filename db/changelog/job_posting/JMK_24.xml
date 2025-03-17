@@ -61,6 +61,9 @@
             <column name="job_posting_id" type="SERIAL">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
+            <column name="client_id" type="UUID">
+                <constraints nullable="false" foreignKeyName="fk_clients_job_postings" referencedTableName="clients" referencedColumnNames="client_id"/>
+            </column>
             <column name="title" type="VARCHAR(255)"/>
             <column name="description" type="TEXT"/>
             <column name="budget_type" type="budget_type"/>
