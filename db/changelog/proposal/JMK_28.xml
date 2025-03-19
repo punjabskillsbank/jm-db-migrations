@@ -27,16 +27,16 @@
             <column name="proposal_id" type="SERIAL">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="job_id" type="INT">
+            <column name="job_posting_id" type="INT">
                 <constraints nullable="false" foreignKeyName="fk_proposals_job" referencedTableName="job_postings" referencedColumnNames="job_posting_id"/>
             </column>
-            <column name="freelancer_id" type="INT">
+            <column name="freelancer_id" type="UUID">
                 <constraints nullable="false" foreignKeyName="fk_proposals_freelancer" referencedTableName="freelancers" referencedColumnNames="freelancer_id"/>
             </column>
-            <column name="client_id" type="INT">
+            <column name="client_id" type="UUID">
                 <constraints nullable="false" foreignKeyName="fk_proposals_client" referencedTableName="clients" referencedColumnNames="client_id"/>
             </column>
-            <column name="proposed_bid_amount" type="DECIMAL"/>
+            <column name="proposed_bid_amount" type="INT"/>
             <column name="proposal_status" type="proposal_status"/>
             <column name="cover_letter" type="TEXT"/>
             <column name="created_at" type="TIMESTAMP"/>
@@ -55,8 +55,8 @@
             </not>
         </preConditions>
 
-        <createTable tableName="proposal_attachment_id">
-            <column name="attachment_id" type="SERIAL">
+        <createTable tableName="proposal_attachmentS">
+            <column name="proposal_attachment_id" type="SERIAL">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="proposal_id" type="INT">
