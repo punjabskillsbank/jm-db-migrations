@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.8.xsd">
+
+    <!-- Create ENUM type for proposal_status -->
+    <changeSet id="JMK_28_01_Create_Enum_Types" author="Ansh Preet Kaur">
+        <sql>
+            CREATE TYPE proposal_status AS ENUM('SUBMITTED', 'WITHDRAWN', 'ACCEPTED', 'REJECTED');
+        </sql>
+        <rollback>
+            <sql>DROP TYPE IF EXISTS proposal_status;</sql>
+        </rollback>
+    </changeSet>
+
+    <!-- Create Proposals Table -->
+    <changeSet id="JMK_28_02_Create_Proposals_Table" author="Ansh Preet Kaur">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="proposals"/>
+            </not>
+        </preConditions>
+
+        <createTable tableName="proposals">
+            <column name="proposal_id" type="SERIAL">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="job_posting_id" type="INT">
+                <constraints nullable="false" foreignKeyName="fk_proposals_job" referencedTableName="job_postings" referencedColumnNames="job_posting_id"/>
+            </column>
+            <column name="freelancer_id" type="UUID">
+                <constraints nullable="false" foreignKeyName="fk_proposals_freelancer" referencedTableName="freelancers" referencedColumnNames="freelancer_id"/>
+            </column>
+            <column name="client_id" type="UUID">
+                <constraints nullable="false" foreignKeyName="fk_proposals_client" referencedTableName="clients" referencedColumnNames="client_id"/>
+            </column>
+            <column name="proposed_bid_amount" type="INT"/>
+            <column name="proposal_status" type="proposal_status"/>
+            <column name="cover_letter" type="TEXT"/>
+            <column name="created_at" type="TIMESTAMP"/>
+            <column name="updated_at" type="TIMESTAMP"/>
+        </createTable>
+        <rollback>
+            <dropTable tableName="proposals"/>
+        </rollback>
+    </changeSet>
+
+    <!-- Create Proposal Attachments Table -->
+    <changeSet id="JMK_28_03_Create_Proposal_Attachments_Table" author="Ansh Preet Kaur">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="proposal_attachments"/>
+            </not>
+        </preConditions>
+
+        <createTable tableName="proposal_attachmentS">
+            <column name="proposal_attachment_id" type="SERIAL">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="proposal_id" type="INT">
+                <constraints nullable="false" foreignKeyName="fk_proposals_attachments" referencedTableName="proposals" referencedColumnNames="proposal_id"/>
+            </column>
+            <column name="file_name" type="VARCHAR(255)"/>
+            <column name="file_url" type="VARCHAR(2048)"/>
+            <column name="created_at" type="TIMESTAMP"/>
+            <column name="updated_at" type="TIMESTAMP"/>
+        </createTable>
+        <rollback>
+            <dropTable tableName="proposal_attachments"/>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>
