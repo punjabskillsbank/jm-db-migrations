@@ -8,15 +8,7 @@
 
     <changeSet id="JMK_43_001-add-new-value-to-account-status-enum" author="Pawanpreet Singh">
         <sql>
-
-            CREATE TYPE account_status_new AS ENUM('ACTIVE','DEACTIVATED','DELETED', 'SUSPENDED', 'BANNED','PENDING', 'TO_BE_DELETED');
-
-            ALTER TABLE users ALTER account_status TYPE account_status_new USING account_status::text::account_status_new;
-
-            DROP TYPE account_status;
-
-            ALTER TYPE account_status_new RENAME TO account_status;
-
+            ALTER TYPE account_status ADD VALUE 'TO_BE_DELETED' AFTER 'PENDING';
         </sql>
     </changeSet>
 
