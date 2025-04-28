@@ -12,5 +12,6 @@
     <include file="db/changelog/job_posting/JMK_24.xml"/>
     <include file="db/changelog/proposal/JMK_28.xml"/>
     <include file="db/changelog/profile_management/JMK_43.xml"/>
+    <include file="db/changelog/profile_management/JMK_54.xml"/>
 
 </databaseChangeLog>
