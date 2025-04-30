@@ -3,7 +3,7 @@
         xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
-    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.8.xsd">
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.8.xsd">
 
     <include file="db/changelog/profile_management/JMK_10.xml"/>
     <include file="db/changelog/notifications/JMK_6.xml"/>
@@ -12,6 +12,5 @@
     <include file="db/changelog/job_posting/JMK_24.xml"/>
     <include file="db/changelog/proposal/JMK_28.xml"/>
     <include file="db/changelog/profile_management/JMK_43.xml"/>
-    <include file="db/changelog/profile_management/JMK_54.xml"/>
 
 </databaseChangeLog>

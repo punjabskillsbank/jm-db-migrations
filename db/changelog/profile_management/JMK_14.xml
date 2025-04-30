@@ -20,7 +20,7 @@
             </column>
             <column name="phone_number" type="VARCHAR(20)" />
             <column name="bio" type="TEXT"/>
-            <column name="profile_photo_url" type="VARCHAR(2048)"/>
+            <column name="profile_photo_url" type="TEXT"/>
             <column name="company_name" type="VARCHAR(255)">
                 <constraints nullable="false"/>
             </column>
