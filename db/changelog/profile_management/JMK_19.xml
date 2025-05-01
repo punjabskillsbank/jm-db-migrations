@@ -22,7 +22,7 @@
             </column>
             <column name="title" type="varchar(255)"/>
             <column name="bio" type="TEXT"/>
-            <column name="hourly_rate" type="numeric(38, 2)"/>
+            <column name="hourly_rate" type="INTEGER"/>
             <column name="timezone" type="VARCHAR(255)" defaultValue="Asia/Kolkata"/>
             <column name="city" type="VARCHAR(100)"/>
             <column name="state" type="VARCHAR(100)"/>
