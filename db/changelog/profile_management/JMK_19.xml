@@ -22,7 +22,7 @@
             </column>
             <column name="title" type="varchar(255)"/>
             <column name="bio" type="TEXT"/>
-            <column name="hourly_rate" type="numeric(38, 2)"/>
+            <column name="hourly_rate" type="INTEGER"/>
             <column name="timezone" type="VARCHAR(255)" defaultValue="Asia/Kolkata"/>
             <column name="city" type="VARCHAR(100)"/>
             <column name="state" type="VARCHAR(100)"/>
@@ -31,7 +31,7 @@
             <column name="address" type="VARCHAR(255)"/>
             <column name="phone_number" type="VARCHAR(20)" />
             <column name="is_abc_member" type="boolean"/>
-            <column name="profile_photo_url" type="VARCHAR(2048)"/>
+            <column name="profile_photo_url" type="TEXT"/>
             <column name="profile_status" type="profile_status"/>
             <column name="created_at" type="TIMESTAMP" />
             <column name="updated_at" type="TIMESTAMP" />
@@ -60,7 +60,7 @@
         </preConditions>
 
         <createTable tableName="educations">
-            <column name="education_id" type="SERIAL">
+            <column name="education_id" type="BIGSERIAL">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="degree" type="varchar(255)"/>
@@ -91,11 +91,11 @@
     <changeSet id="JMK_19_06_Create_Jobs_Table" author="Sehajbir Singh">
         <preConditions onFail="MARK_RAN">
             <not>
-                <tableExists tableName="job"/>
+                <tableExists tableName="jobs"/>
             </not>
         </preConditions>
         <createTable tableName="jobs">
-            <column name="job_id" type="SERIAL">
+            <column name="job_id" type="BIGSERIAL">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="job_title" type="varchar(255)"/>
@@ -130,7 +130,7 @@
             </not>
         </preConditions>
         <createTable tableName="certificates">
-            <column name="certificate_id" type="SERIAL">
+            <column name="certificate_id" type="BIGSERIAL">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="certificate_name" type="varchar(255)"/>
