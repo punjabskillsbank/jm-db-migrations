@@ -22,7 +22,7 @@
         </preConditions>
 
         <createTable tableName="categories">
-            <column name="category_id" type="SERIAL">
+            <column name="category_id" type="BIGSERIAL">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="category" type="VARCHAR(255)"/>
@@ -40,7 +40,7 @@
         </preConditions>
 
         <createTable tableName="skills">
-            <column name="skill_id" type="SERIAL">
+            <column name="skill_id" type="BIGSERIAL">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="skill" type="VARCHAR(255)"/>
@@ -58,7 +58,7 @@
         </preConditions>
 
         <createTable tableName="job_postings">
-            <column name="job_posting_id" type="SERIAL">
+            <column name="job_posting_id" type="BIGSERIAL">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="client_id" type="UUID">
@@ -73,7 +73,7 @@
             <column name="project_duration" type="project_duration"/>
             <column name="experience_level" type="experience_level"/>
             <column name="job_posting_status" type="job_posting_status"/>
-            <column name="category_id" type="int">
+            <column name="category_id" type="BIGINT">
                 <constraints nullable="false" foreignKeyName="fk_job_postings_categories" referencedTableName="categories" referencedColumnNames="category_id"/>
             </column>
             <column name="created_at" type="TIMESTAMP"/>
@@ -89,10 +89,10 @@
         </preConditions>
 
         <createTable tableName="job_postings_skills">
-            <column name="job_posting_id" type="INT">
+            <column name="job_posting_id" type="BIGINT">
                 <constraints nullable="false" foreignKeyName="fk_job_postings_job_postings_skills" referencedTableName="job_postings" referencedColumnNames="job_posting_id"/>
             </column>
-            <column name="skill_id" type="INT">
+            <column name="skill_id" type="BIGINT">
                 <constraints nullable="false" foreignKeyName="fk_skills_job_postings" referencedTableName="skills" referencedColumnNames="skill_id"/>
             </column>
         </createTable>
