@@ -22,7 +22,7 @@
         </preConditions>
 
         <createTable tableName="categories">
-            <column name="category_id" type="SERIAL">
+            <column name="category_id" type="BIGSERIAL">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="category" type="VARCHAR(255)"/>
@@ -40,7 +40,7 @@
         </preConditions>
 
         <createTable tableName="skills">
-            <column name="skill_id" type="SERIAL">
+            <column name="skill_id" type="BIGSERIAL">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="skill" type="VARCHAR(255)"/>
@@ -58,7 +58,7 @@
         </preConditions>
 
         <createTable tableName="job_postings">
-            <column name="job_posting_id" type="SERIAL">
+            <column name="job_posting_id" type="BIGSERIAL">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="client_id" type="UUID">
