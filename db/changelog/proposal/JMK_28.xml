@@ -24,9 +24,10 @@
         </preConditions>
 
         <createTable tableName="proposals">
-            <column name="proposal_id" type="SERIAL">
+            <column name="proposal_id" type="BIGSERIAL">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
+            <column name="proposal_status" type="proposal_status"/>
             <column name="job_posting_id" type="INT">
                 <constraints nullable="false" foreignKeyName="fk_proposals_job" referencedTableName="job_postings" referencedColumnNames="job_posting_id"/>
             </column>
@@ -37,7 +38,6 @@
                 <constraints nullable="false" foreignKeyName="fk_proposals_client" referencedTableName="clients" referencedColumnNames="client_id"/>
             </column>
             <column name="proposed_bid_amount" type="INT"/>
-            <column name="proposal_status" type="proposal_status"/>
             <column name="cover_letter" type="TEXT"/>
             <column name="created_at" type="TIMESTAMP"/>
             <column name="updated_at" type="TIMESTAMP"/>
