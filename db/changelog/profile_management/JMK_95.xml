@@ -13,6 +13,9 @@
         </preConditions>
 
         <createTable tableName="freelancer_services">
+            <column name="freelancer_services_id" type="BIGINT">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
             <column name="freelancer_id" type="UUID">
                 <constraints nullable="false" foreignKeyName="fk_freelancer_services_freelancer" referencedTableName="freelancers" referencedColumnNames="freelancer_id"/>
             </column>
