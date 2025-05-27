@@ -13,7 +13,7 @@
         </preConditions>
 
         <createTable tableName="freelancer_services">
-            <column name="freelancer_services_id" type="BIGINT">
+            <column name="freelancer_service_id" type="BIGSERIAL" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="freelancer_id" type="UUID">
@@ -23,6 +23,11 @@
                 <constraints nullable="false" foreignKeyName="fk_freelancer_services_category" referencedTableName="categories" referencedColumnNames="category_id"/>
             </column>
         </createTable>
+
+        <rollback>
+            <dropTable tableName="freelancer_services"/>
+        </rollback>
+
     </changeSet>
 
 </databaseChangeLog>
