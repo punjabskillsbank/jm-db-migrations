@@ -158,24 +158,16 @@
                 onDelete="CASCADE"/>
     </changeSet>
 
-    <changeSet id="JMK_98_01_Create_Enum_Types" author="Kirandeep kaur">
-        <preConditions onFail="MARK_RAN">
-            <not>
-                <sqlCheck expectedResult="0">
-                    SELECT COUNT(*) FROM pg_type WHERE typname = 'profile_visibility';
-                </sqlCheck>
-            </not>
-        </preConditions>
+    <changeSet id="JMK_98_01_Create_Profile_Visibility_Type" author="Kirandeep kaur">
         <sql>
-            CREATE TYPE profile_visibility AS ENUM ('public', 'private');
+            CREATE TYPE profile_visibility AS ENUM ('public', 'private', 'connections_only');
         </sql>
     </changeSet>
 
     <changeSet id="JMK_98_02_Add_Profile_Visibility_Column" author="Kirandeep kaur">
-        <addColumn tableName="freelancers">
-            <column name="profile_visibility" type="profile_visibility" defaultValue="public"/>
-        </addColumn>
+        <sql>
+            ALTER TABLE freelancers ADD profile_visibility profile_visibility DEFAULT 'public';
+        </sql>
     </changeSet>
-
 
 </databaseChangeLog>
