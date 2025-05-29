@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.17.xsd">
+
+    <changeSet id="JMK_95_Create_Freelancer_Services_Table" author="Jasdeep Singh">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="freelancer_services"/>
+            </not>
+        </preConditions>
+
+        <createTable tableName="freelancer_services">
+            <column name="freelancer_service_id" type="BIGSERIAL" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="freelancer_id" type="UUID">
+                <constraints nullable="false" foreignKeyName="fk_freelancer_services_freelancer" referencedTableName="freelancers" referencedColumnNames="freelancer_id"/>
+            </column>
+            <column name="category_id" type="BIGINT">
+                <constraints nullable="false" foreignKeyName="fk_freelancer_services_category" referencedTableName="categories" referencedColumnNames="category_id"/>
+            </column>
+        </createTable>
+
+        <rollback>
+            <dropTable tableName="freelancer_services"/>
+        </rollback>
+
+    </changeSet>
+
+</databaseChangeLog>
