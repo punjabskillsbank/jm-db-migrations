@@ -7,7 +7,7 @@
 
     <changeSet id="JMK_98_01_Create_Profile_Visibility_Type" author="Kirandeep kaur">
         <sql>
-            CREATE TYPE profile_visibility AS ENUM ('PUBLIC','PRIVATE');
+            CREATE TYPE IF NOT EXISTS profile_visibility AS ENUM ('PUBLIC','PRIVATE');
         </sql>
     </changeSet>
 
