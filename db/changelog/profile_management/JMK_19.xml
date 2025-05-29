@@ -158,16 +158,4 @@
                 onDelete="CASCADE"/>
     </changeSet>
 
-    <changeSet id="JMK_98_01_Create_Profile_Visibility_Type" author="Kirandeep kaur">
-        <sql>
-            CREATE TYPE profile_visibility AS ENUM ('PUBLIC','PRIVATE');
-        </sql>
-    </changeSet>
-
-    <changeSet id="JMK_98_02_Add_Profile_Visibility_Column" author="Kirandeep kaur">
-        <sql>
-            ALTER TABLE freelancers ADD profile_visibility profile_visibility DEFAULT 'PUBLIC';
-        </sql>
-    </changeSet>
-
 </databaseChangeLog>
