@@ -6,8 +6,14 @@
     http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
 
     <changeSet id="JMK_98_01_Create_Profile_Visibility_Type" author="Kirandeep kaur">
+        <preConditions onFail="MARK_RAN">
+            <sqlCheck expectedResult="0">
+                SELECT COUNT(*) FROM pg_type WHERE typname = 'profile_visibility'
+            </sqlCheck>
+        </preConditions>
+
         <sql>
-            CREATE TYPE IF NOT EXISTS profile_visibility AS ENUM ('PUBLIC','PRIVATE');
+            CREATE TYPE profile_visibility AS ENUM ('PUBLIC', 'PRIVATE');
         </sql>
     </changeSet>
 
