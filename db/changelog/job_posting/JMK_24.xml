@@ -89,6 +89,9 @@
         </preConditions>
 
         <createTable tableName="job_postings_skills">
+            <column name="job_posting_skill_id" type="BIGSERIAL">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
             <column name="job_posting_id" type="BIGINT">
                 <constraints nullable="false" foreignKeyName="fk_job_postings_job_postings_skills" referencedTableName="job_postings" referencedColumnNames="job_posting_id"/>
             </column>
@@ -97,5 +100,4 @@
             </column>
         </createTable>
     </changeSet>
-
 </databaseChangeLog>
