@@ -99,7 +99,6 @@
                 <constraints nullable="false"/>
             </column>
         </createTable>
-
         <addForeignKeyConstraint
                 baseTableName="job_postings_skills"
                 baseColumnNames="job_posting_id"
@@ -107,7 +106,6 @@
                 referencedTableName="job_postings"
                 referencedColumnNames="job_posting_id"
                 onDelete="CASCADE"/>
-
         <addForeignKeyConstraint
                 baseTableName="job_postings_skills"
                 baseColumnNames="skill_id"
