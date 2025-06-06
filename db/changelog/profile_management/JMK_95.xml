@@ -17,12 +17,30 @@
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="freelancer_id" type="UUID">
-                <constraints nullable="false" foreignKeyName="fk_freelancer_services_freelancer" referencedTableName="freelancers" referencedColumnNames="freelancer_id"/>
+                <constraints nullable="false"/>
             </column>
             <column name="category_id" type="BIGINT">
-                <constraints nullable="false" foreignKeyName="fk_freelancer_services_category" referencedTableName="categories" referencedColumnNames="category_id"/>
+                <constraints nullable="false"/>
             </column>
         </createTable>
+
+        <!-- Add Foreign Key with ON DELETE CASCADE for freelancer_id -->
+        <addForeignKeyConstraint
+                baseTableName="freelancer_services"
+                baseColumnNames="freelancer_id"
+                constraintName="fk_freelancer_services_freelancer"
+                referencedTableName="freelancers"
+                referencedColumnNames="freelancer_id"
+                onDelete="CASCADE"/>
+
+        <!-- Add Foreign Key with ON DELETE CASCADE for category_id -->
+        <addForeignKeyConstraint
+                baseTableName="freelancer_services"
+                baseColumnNames="category_id"
+                constraintName="fk_freelancer_services_category"
+                referencedTableName="categories"
+                referencedColumnNames="category_id"
+                onDelete="CASCADE"/>
 
         <rollback>
             <dropTable tableName="freelancer_services"/>
