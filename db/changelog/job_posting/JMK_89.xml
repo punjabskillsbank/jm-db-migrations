@@ -13,7 +13,7 @@
         </preConditions>
 
         <createTable tableName="job_posting_questions">
-            <column name="question_id" type="SERIAL">
+            <column name="question_id" type="BIGSERIAL">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="job_posting_id" type="BIGINT">
