@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="JMK_89_01_Create_Job_Post_Questions_Table" author="Ansh Preet Kaur">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="job_posting_questions"/>
+            </not>
+        </preConditions>
+
+        <createTable tableName="job_posting_questions">
+            <column name="question_id" type="BIGSERIAL">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="job_posting_id" type="BIGINT">
+                <constraints nullable="false" foreignKeyName="fk_questions_job_posting" referencedTableName="job_postings" referencedColumnNames="job_posting_id"/>
+            </column>
+            <column name="question" type="TEXT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_at" type="TIMESTAMP"/>
+            <column name="updated_at" type="TIMESTAMP"/>
+        </createTable>
+
+        <rollback>
+            <dropTable tableName="job_posting_questions"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>
