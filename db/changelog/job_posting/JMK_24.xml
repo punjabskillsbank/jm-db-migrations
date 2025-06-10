@@ -93,11 +93,9 @@
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="job_posting_id" type="BIGINT">
-                <constraints nullable="false" foreignKeyName="fk_job_postings_job_postings_skills" referencedTableName="job_postings" referencedColumnNames="job_posting_id"/>
                 <constraints nullable="false"/>
             </column>
             <column name="skill_id" type="BIGINT">
-                <constraints nullable="false" foreignKeyName="fk_skills_job_postings" referencedTableName="skills" referencedColumnNames="skill_id"/>
                 <constraints nullable="false"/>
             </column>
         </createTable>
