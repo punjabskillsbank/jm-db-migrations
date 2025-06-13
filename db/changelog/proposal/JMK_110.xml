@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="JMK_110_01_Create_Proposal_Question_Answer_Table" author="Ansh Preet Kaur">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="proposal_question_answer"/>
+            </not>
+        </preConditions>
+
+        <createTable tableName="proposal_question_answer">
+            <column name="answer_id" type="BIGSERIAL">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+
+            <column name="proposal_id" type="BIGINT">
+                <constraints nullable="false"
+                             foreignKeyName="fk_answer_proposal"
+                             referencedTableName="proposals"
+                             referencedColumnNames="proposal_id"/>
+            </column>
+
+            <column name="question_id" type="BIGINT">
+                <constraints nullable="false"
+                             foreignKeyName="fk_answer_question"
+                             referencedTableName="job_posting_questions"
+                             referencedColumnNames="question_id"/>
+            </column>
+
+            <column name="answer" type="TEXT">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="created_at" type="TIMESTAMP"/>
+            <column name="updated_at" type="TIMESTAMP"/>
+        </createTable>
+
+        <addUniqueConstraint
+                tableName="proposal_question_answer"
+                columnNames="proposal_id, question_id"
+                constraintName="uq_proposal_question_pair"/>
+
+        <rollback>
+            <dropTable tableName="proposal_question_answer"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>
