@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="add-freelancer-saved-jobs-table" author="kirandeep kaur">
+
+        <createTable tableName="freelancer_saved_jobs">
+            <column name="freelancer_id" type="UUID">
+                <constraints nullable="false" foreignKeyName="fk_freelancers_saved_jobs_freelancers"
+                             referencedTableName="freelancers" referencedColumnNames="freelancer_id"/>
+            </column>
+            <column name="job_posting_id" type="BIGINT">
+                <constraints nullable="false" foreignKeyName="fk_freelancers_saved_jobs_job_postings"
+                             referencedTableName="job_postings" referencedColumnNames="job_posting_id"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey
+                tableName="freelancer_saved_jobs"
+                columnNames="freelancer_id, job_posting_id"
+                constraintName="pk_freelancer_saved_jobs"/>
+
+    </changeSet>
+
+
+</databaseChangeLog>
