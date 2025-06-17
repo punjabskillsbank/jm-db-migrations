@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="JMK_111_01_add-freelancer-saved-jobs-table" author="kirandeep kaur">
+
+        <createTable tableName="freelancer_saved_jobs">
+            <column name="freelancer_saved_jobs_id" type="BIGSERIAL">
+                <constraints primaryKey="true" nullable="false" primaryKeyName="pk_freelancer_saved_jobs"/>
+            </column>
+
+            <column name="freelancer_id" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="job_posting_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint
+                baseTableName="freelancer_saved_jobs"
+                baseColumnNames="freelancer_id"
+                constraintName="fk_freelancers_saved_jobs_freelancers"
+                referencedTableName="freelancers"
+                referencedColumnNames="freelancer_id"
+                onDelete="CASCADE"/>
+
+        <addForeignKeyConstraint
+                baseTableName="freelancer_saved_jobs"
+                baseColumnNames="job_posting_id"
+                constraintName="fk_freelancers_saved_jobs_job_postings"
+                referencedTableName="job_postings"
+                referencedColumnNames="job_posting_id"
+                onDelete="CASCADE"/>
+
+    </changeSet>
+
+</databaseChangeLog>
