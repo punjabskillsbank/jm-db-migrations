@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+<changeSet id="JMK_119_01_Create_Job_Posting_Files_Table" author="Ansh Preet Kaur">
+    <preConditions onFail="MARK_RAN">
+        <not>
+            <tableExists tableName="job_posting_files"/>
+        </not>
+    </preConditions>
+
+    <createTable tableName="job_posting_files">
+        <column name="file_id" type="BIGSERIAL">
+            <constraints primaryKey="true" nullable="false"/>
+        </column>
+        <column name="job_posting_id" type="BIGINT">
+            <constraints nullable="false"/>
+        </column>
+        <column name="file_url" type="TEXT">
+            <constraints nullable="false"/>
+        </column>
+        <column name="uploaded_at" type="TIMESTAMP" />
+        <column name="updated_at" type="TIMESTAMP"/>
+    </createTable>
+
+    <rollback>
+        <dropTable tableName="job_posting_files"/>
+    </rollback>
+</changeSet>
+
+<changeSet id="JMK_119_02_Add_Job_Posting_Files_Foreign_Key" author="Ansh Preet Kaur">
+<addForeignKeyConstraint
+        baseTableName="job_posting_files"
+        baseColumnNames="job_posting_id"
+        referencedTableName="job_postings"
+        referencedColumnNames="job_posting_id"
+        constraintName="fk_job_posting_files_job_postings"
+        onDelete="CASCADE"/>
+</changeSet>
+
+</databaseChangeLog>
