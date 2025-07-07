@@ -19,7 +19,7 @@
         <column name="job_posting_id" type="BIGINT">
             <constraints nullable="false"/>
         </column>
-        <column name="file_url" type="TEXT">
+        <column name="job_posting_files_s3_key" type="TEXT">
             <constraints nullable="false"/>
         </column>
         <column name="uploaded_at" type="TIMESTAMP" />
