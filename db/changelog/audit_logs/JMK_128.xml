@@ -5,53 +5,51 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
          https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
 
-    <changeSet id="JMK_128_create-audit-logs-table" author="Jasdeep Singh">
-        <createTable tableName="audit_logs">
-            <column name="event_id" type="UUID">
-                <constraints primaryKey="true" nullable="false"/>
-            </column>
-            <column name="service_name" type="VARCHAR(255)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="event_type" type="VARCHAR(50)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="entity_name" type="VARCHAR(255)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="entity_id" type="BIGINT">
-                <constraints nullable="false"/>
-            </column>
-            <column name="user_id" type="UUID">
-                <constraints nullable="false"/>
-            </column>
-            <column name="user_role" type="VARCHAR(50)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="event_time" type="TIMESTAMPTZ" defaultValueComputed="NOW()">
-                <constraints nullable="false"/>
-            </column>
-            <column name="old_value" type="TEXT" defaultValueComputed="NULL"/>
-            <column name="new_value" type="TEXT">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
+<changeSet id="JMK_128_create-audit-logs-table" author="Jasdeep Singh">
+    <createTable tableName="audit_logs">
+        <column name="event_id" type="UUID">
+            <constraints primaryKey="true" nullable="false"/>
+        </column>
+        <column name="service_name" type="VARCHAR(255)">
+            <constraints nullable="false"/>
+        </column>
+        <column name="event_type" type="VARCHAR(50)">
+            <constraints nullable="false"/>
+        </column>
+        <column name="entity_name" type="VARCHAR(255)">
+            <constraints nullable="false"/>
+        </column>
+        <column name="entity_id" type="BIGINT">
+            <constraints nullable="false"/>
+        </column>
+        <column name="user_id" type="UUID">
+            <constraints nullable="false"/>
+        </column>
+        <column name="user_role" type="VARCHAR(50)">
+            <constraints nullable="false"/>
+        </column>
+        <column name="event_time" type="TIMESTAMPTZ" defaultValueComputed="NOW()">
+            <constraints nullable="false"/>
+        </column>
+        <column name="old_value" type="TEXT" defaultValueComputed="NULL"/>
+        <column name="new_value" type="TEXT">
+            <constraints nullable="false"/>
+        </column>
+    </createTable>
 
-        <!-- Add CHECK constraint for event_type -->
-        <addCheckConstraint
-                tableName="audit_logs"
-                constraintName="chk_event_type"
-                checkCondition="event_type IN ('JOB_CREATED', 'JOB_UPDATED', 'JOB_DELETED')"/>
+    <!-- Add check constraints using raw SQL -->
+    <sql>
+        ALTER TABLE audit_logs
+        ADD CONSTRAINT chk_event_type CHECK (event_type IN ('JOB_CREATED', 'JOB_UPDATED', 'JOB_DELETED'));
+    </sql>
 
-        <!-- Add CHECK constraint for user_role -->
-        <addCheckConstraint
-                tableName="audit_logs"
-                constraintName="chk_user_role"
-                checkCondition="user_role IN ('CLIENT', 'FREELANCER', 'ADMIN', 'CLIENT_FREELANCER')"/>
+    <sql>
+        ALTER TABLE audit_logs
+        ADD CONSTRAINT chk_user_role CHECK (user_role IN ('CLIENT', 'FREELANCER', 'ADMIN', 'CLIENT_FREELANCER'));
+    </sql>
 
-        <rollback>
-            <dropTable tableName="audit_logs"/>
-        </rollback>
-    </changeSet>
-
+    <rollback>
+        <dropTable tableName="audit_logs"/>
+    </rollback>
+</changeSet>
 </databaseChangeLog>
