@@ -7,7 +7,7 @@
 
 <changeSet id="JMK_128_create-audit-logs-table" author="Jasdeep Singh">
     <createTable tableName="audit_logs">
-        <column name="event_id" type="UUID">
+        <column name="event_id" type="BIGINT" autoIncrement="true">
             <constraints primaryKey="true" nullable="false"/>
         </column>
         <column name="service_name" type="VARCHAR(255)">
