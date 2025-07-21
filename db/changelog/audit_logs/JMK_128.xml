@@ -28,7 +28,7 @@
         <column name="user_role" type="VARCHAR(50)">
             <constraints nullable="false"/>
         </column>
-        <column name="event_time" type="TIMESTAMPTZ" defaultValueComputed="NOW()">
+        <column name="event_time" type="TIMESTAMP" defaultValueComputed="NOW()">
             <constraints nullable="false"/>
         </column>
         <column name="old_value" type="TEXT" defaultValueComputed="NULL"/>
