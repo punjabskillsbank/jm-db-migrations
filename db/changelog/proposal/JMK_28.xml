@@ -8,7 +8,7 @@
     <!-- Create ENUM type for proposal_status -->
     <changeSet id="JMK_28_01_Create_Enum_Types" author="Ansh Preet Kaur">
         <sql>
-            CREATE TYPE proposal_status AS ENUM('SUBMITTED', 'WITHDRAWN', 'ACCEPTED', 'REJECTED');
+            CREATE TYPE proposal_status AS ENUM('SUBMITTED', 'WITHDRAWN', 'ACCEPTED', 'REJECTED', 'DRAFT');
         </sql>
         <rollback>
             <sql>DROP TYPE IF EXISTS proposal_status;</sql>
