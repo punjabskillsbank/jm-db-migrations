@@ -37,7 +37,7 @@
     <!-- Add check constraints using raw SQL -->
     <sql>
         ALTER TABLE audit_logs
-        ADD CONSTRAINT chk_event_type CHECK (event_type IN ('JOB_UPDATED', 'CLIENT_PROFILE_UPDATED', 'FREELANCER_PROFILE_UPDATED', 'USER_ACCOUNT_UPDATED', 'PROPOSAL_UPDATED'));
+        ADD CONSTRAINT chk_event_type CHECK (event_type IN ('JOB_POSTING_UPDATED', 'CLIENT_PROFILE_UPDATED', 'FREELANCER_PROFILE_UPDATED', 'USER_ACCOUNT_UPDATED', 'PROPOSAL_UPDATED'));
     </sql>
 
     <rollback>
