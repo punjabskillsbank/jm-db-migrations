@@ -5,9 +5,9 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
 
-    <changeSet id="create-contracts-table" author="Sahib Singh">
+    <changeSet id="JMK_131_create-contracts-table" author="Sahib Singh">
         <createTable tableName="contracts">
-            <column name="contracts_id" type="UUID">
+            <column name="contracts_id" type="BIGSERIAL">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="job_posting_id" type="BIGINT">
@@ -16,16 +16,16 @@
             <column name="proposal_id" type="BIGINT">
                 <constraints nullable="false"/>
             </column>
-            <column name="client_id" type="BIGINT">
+            <column name="client_id" type="UUID">
                 <constraints nullable="false"/>
             </column>
-            <column name="freelancer_id" type="BIGINT">
+            <column name="freelancer_id" type="UUID">
                 <constraints nullable="false"/>
             </column>
             <column name="title" type="VARCHAR(255)">
                 <constraints nullable="false"/>
             </column>
-            <column name="amount" type="DECIMAL(10,2)">
+            <column name="amount" type="BIGINT">
                 <constraints nullable="false"/>
             </column>
             <column name="start_date" type="DATE">
@@ -35,14 +35,13 @@
             <column name="offer_expiry_date" type="DATE"/>
             <column name="weekly_hour_limit" type="INTEGER"/>
 
-            <column name="contract_type" type="VARCHAR(20)">
+            <column name="contract_type" type="contract_type_enum">
+            <constraints nullable="false"/>
+            </column>
+            <column name="contract_status" type="contract_status_enum">
                 <constraints nullable="false"/>
             </column>
-
-            <column name="status" type="VARCHAR(50)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="hourly_rate" type="DECIMAL(10,2)">
+            <column name="hourly_rate" type="INTEGER">
                 <constraints nullable="false"/></column>
             <column name="created_at" type="TIMESTAMP">
                 <constraints nullable="false"/>
@@ -51,5 +50,8 @@
                 <constraints nullable="false"/>
             </column>
         </createTable>
+        <rollback>
+            <dropTable tableName="contracts"/>
+        </rollback>
     </changeSet>
 </databaseChangeLog>
