@@ -52,8 +52,23 @@
         </createTable>
 
         <sql>
-            CREATE TYPE contract_type_enum AS ENUM ('FIXED', 'HOURLY');
-            CREATE TYPE contract_status_enum AS ENUM ('ACTIVE', 'PENDING', 'COMPLETED', 'CANCELLED');
+            CREATE TYPE contract_type_enum AS ENUM (
+            'FIXED',
+            'HOURLY'
+            );
+
+            CREATE TYPE contract_status_enum AS ENUM (
+            'ACTIVE',
+            'PENDING',
+            'COMPLETED',
+            'CANCELLED'
+            );
+
+            ALTER TABLE contracts
+            ADD COLUMN contract_type contract_type_enum NOT NULL;
+
+            ALTER TABLE contracts
+            ADD COLUMN contract_status contract_status_enum NOT NULL;
         </sql>
 
         <rollback>
