@@ -7,7 +7,7 @@
 
     <changeSet id="JMK_131_create-contracts-table" author="Sahib Singh">
         <createTable tableName="contracts">
-            <column name="contracts_id" type="BIGSERIAL">
+            <column name="contract_id" type="BIGSERIAL">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="job_posting_id" type="BIGINT">
@@ -34,13 +34,6 @@
             <column name="deadline_date" type="DATE"/>
             <column name="offer_expiry_date" type="DATE"/>
             <column name="weekly_hour_limit" type="INTEGER"/>
-
-            <column name="contract_type" type="VARCHAR(50)">
-            <constraints nullable="false"/>
-            </column>
-            <column name="contract_status" type="VARCHAR(50)">
-                <constraints nullable="false"/>
-            </column>
             <column name="hourly_rate" type="INTEGER">
                 <constraints nullable="false"/></column>
             <column name="created_at" type="TIMESTAMP">
@@ -50,26 +43,6 @@
                 <constraints nullable="false"/>
             </column>
         </createTable>
-
-        <sql>
-            CREATE TYPE contract_type_enum AS ENUM (
-            'FIXED',
-            'HOURLY'
-            );
-
-            CREATE TYPE contract_status_enum AS ENUM (
-            'ACTIVE',
-            'PENDING',
-            'COMPLETED',
-            'CANCELLED'
-            );
-
-            ALTER TABLE contracts
-            ADD COLUMN contract_type contract_type_enum NOT NULL;
-
-            ALTER TABLE contracts
-            ADD COLUMN contract_status contract_status_enum NOT NULL;
-        </sql>
 
         <rollback>
             <dropTable tableName="contracts"/>
