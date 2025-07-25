@@ -35,10 +35,10 @@
             <column name="offer_expiry_date" type="DATE"/>
             <column name="weekly_hour_limit" type="INTEGER"/>
 
-            <column name="contract_type" type="contract_type_enum">
+            <column name="contract_type" type="VARCHAR(50)">
             <constraints nullable="false"/>
             </column>
-            <column name="contract_status" type="contract_status_enum">
+            <column name="contract_status" type="VARCHAR(50)">
                 <constraints nullable="false"/>
             </column>
             <column name="hourly_rate" type="INTEGER">
@@ -50,6 +50,12 @@
                 <constraints nullable="false"/>
             </column>
         </createTable>
+
+        <sql>
+            CREATE TYPE contract_type_enum AS ENUM ('FIXED', 'HOURLY');
+            CREATE TYPE contract_status_enum AS ENUM ('ACTIVE', 'PENDING', 'COMPLETED', 'CANCELLED');
+        </sql>
+
         <rollback>
             <dropTable tableName="contracts"/>
         </rollback>
