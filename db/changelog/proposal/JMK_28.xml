@@ -28,7 +28,7 @@
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="proposal_status" type="proposal_status"/>
-            <column name="job_posting_id" type="INT">
+            <column name="job_posting_id" type="BIGSERIAL">
                 <constraints nullable="false" foreignKeyName="fk_proposals_job" referencedTableName="job_postings" referencedColumnNames="job_posting_id"/>
             </column>
             <column name="freelancer_id" type="UUID">
