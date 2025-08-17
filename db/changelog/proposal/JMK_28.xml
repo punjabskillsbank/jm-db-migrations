@@ -55,20 +55,30 @@
             </not>
         </preConditions>
 
-        <createTable tableName="proposal_attachmentS">
-            <column name="proposal_attachment_id" type="SERIAL">
+        <createTable tableName="proposal_attachments">
+            <column name="proposal_attachment_id" type="BIGSERIAL">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="proposal_id" type="INT">
-                <constraints nullable="false" foreignKeyName="fk_proposals_attachments" referencedTableName="proposals" referencedColumnNames="proposal_id"/>
+            <column name="proposal_id" type="BIGINT">
+                <constraints nullable="false"/>
             </column>
-            <column name="file_name" type="VARCHAR(255)"/>
-            <column name="file_url" type="VARCHAR(2048)"/>
+            <column name="proposal_attachment_s3_key" type="TEXT"/>
             <column name="created_at" type="TIMESTAMP"/>
             <column name="updated_at" type="TIMESTAMP"/>
         </createTable>
         <rollback>
             <dropTable tableName="proposal_attachments"/>
         </rollback>
+    </changeSet>
+
+    <!-- Add Foreign Key Constraint for Proposal Attachments -->
+    <changeSet id="JMK_143_Add_Proposal_Attachments_Foreign_Key" author="Jasdeep Singh">
+        <addForeignKeyConstraint
+                baseTableName="proposal_attachments"
+                baseColumnNames="proposal_id"
+                referencedTableName="proposals"
+                referencedColumnNames="proposal_id"
+                constraintName="fk_proposal_attachments_proposals"
+                onDelete="CASCADE"/>
     </changeSet>
 </databaseChangeLog>
