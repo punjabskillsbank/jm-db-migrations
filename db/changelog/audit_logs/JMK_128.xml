@@ -20,17 +20,17 @@
             <constraints nullable="false"/>
         </column>
         <column name="entity_id" type="BIGINT">
-            <constraints nullable="false"/>
+            <constraints nullable="true"/>
         </column>
         <column name="user_id" type="UUID">
             <constraints nullable="false"/>
         </column>
         <column name="event_time" type="TIMESTAMP"/>
         <column name="old_value" type="TEXT">
-            <constraints nullable="false"/>
+            <constraints nullable="true"/>
         </column>
         <column name="new_value" type="TEXT">
-            <constraints nullable="false"/>
+            <constraints nullable="true"/>
         </column>
     </createTable>
 
