@@ -36,11 +36,12 @@
             <column name="weekly_hour_limit" type="INTEGER"/>
             <column name="hourly_rate" type="INTEGER">
                 <constraints nullable="false"/></column>
+            <column name="status" type="VARCHAR(255)">
+                <constraints nullable="true"/>
+            </column>
             <column name="created_at" type="TIMESTAMP">
-                <constraints nullable="false"/>
             </column>
             <column name="updated_at" type="TIMESTAMP">
-                <constraints nullable="false"/>
             </column>
         </createTable>
 
